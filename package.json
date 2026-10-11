@@ -1,0 +1,9 @@
+{
+  "name": "dukasole-engineering-showcase",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": { "node": ">=24.7.0" },
+  "scripts": { "test": "node --test" }
+}

@@ -1,0 +1,17 @@
+node_modules/
+data/
+output/
+tmp/
+.env
+.env.*
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.auth-key
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+__pycache__/

@@ -1,0 +1,36 @@
+{
+  "capturedOn": "2026-10-11",
+  "source": "Isolated synthetic fixture; no business database",
+  "screenshots": [
+    "01-home",
+    "02-stock",
+    "03-checkout",
+    "04-payments",
+    "05-sale-review",
+    "06-sale-complete",
+    "07-invoice",
+    "08-credit-note",
+    "09-balance-sheet"
+  ],
+  "saleTotal": 800000,
+  "paymentAllocations": [
+    {
+      "id": "pay_9570b47a-7b94-42bb-b734-eee3636dbe9b",
+      "method": "MOBILE_MONEY",
+      "amount": 480000
+    },
+    {
+      "id": "pay_26bcde24-8724-406b-8de8-af264ea7acae",
+      "method": "CASH",
+      "amount": 320000
+    }
+  ],
+  "balanceSheet": {
+    "assets": 7800000,
+    "liabilities": 110345,
+    "equity": 7689655,
+    "currentEarnings": 189655,
+    "balanceDifference": 0
+  },
+  "browserErrors": []
+}
