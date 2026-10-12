@@ -23,3 +23,7 @@ The runnable SQLite tests use a deliberately small in-memory schema to verify th
 [`references/golden-transaction.reference.js`](../references/golden-transaction.reference.js) is the actual source-derived acceptance specification. It traces receipt/cost → stock → sale → split payments → accounting → statements → PDF text → credit/refund → restart. It compares rendered PDF amounts with calculated statement values, rather than proving only that a file exists. Dependencies needed to run this full test are intentionally private.
 
 The original full application's 279-test run is historical local evidence, not a claim that this reduced repository includes that suite. The runnable showcase tests and their scope are recorded separately in [VALIDATION](VALIDATION.md).
+
+## 5. Foreign currency display is not foreign currency accounting
+
+Added **13 October 2026**: [QuickBooks demo contracts](QUICKBOOKS_DEMO.md) demonstrate strict report boundaries, exact cents, explicit missing evidence, fictional quantity-based credit/refund reconciliation and a display-only currency preview. The preview always converts from the original immutable value, never from a previously rounded display. It uses labelled example rates, not an external quote or an accounting policy. The private local implementation preserves native KES business records/PDFs and the USD sandbox's original report tables and source balance equation.
