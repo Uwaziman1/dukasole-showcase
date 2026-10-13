@@ -4,16 +4,16 @@
 
 | Local suite | Passing | Failing | Scope |
 | --- | ---: | ---: | --- |
-| Reduced public showcase | 33 | 0 | Selected pure contracts and in-memory persistence guard only |
-| Working DukaSole application | 282 | 0 | Existing full regressions plus currency/link acceptance coverage |
-| Sanitized private application checkout | 283 | 0 | Same coverage plus actual isolated DukaSole/fictional-USD economic parity |
-| Optional private QuickBooks module | 35 | 0 | Mocked security, reporting, fixture write/replay/read-back and FX tests |
+| Reduced public showcase | 40 | 0 | Selected pure contracts and in-memory persistence guard only |
+| Working DukaSole application | 286 | 0 | Full regression suite; final layout-only follow-up also passed 18 focused tests |
+| Sanitized private application checkout | 287 | 0 | Same coverage plus actual isolated DukaSole/fictional-USD economic parity |
+| Optional private QuickBooks module | 42 | 0 | Mocked security, reporting, fixture write/replay/read-back, dated FX and accounting-only tests |
 
 Runtime: Node **24.19.0**, SQLite **3.53.3**. The complete application build and Python/PDF preflight also pass. These are local runs, not a claim that the private suite is executable from this public repository or a hosted CI result.
 
-Six new public tests exercise exact/missing report amounts, date/basis/equation checks, the currency gate, integer display conversion, fictional receive/sale/cost/quantity-credit/refund arithmetic, journal evidence mutations and calculated report deltas. An initial test assertion distinguished JavaScript negative zero from monetary zero; the test normalized zero without altering implementation economics. No external API or business database is used by the public tests.
+The current public tests exercise exact/missing report amounts, date/basis/equation checks, currency gates, one-round dated conversion, imported quote allowlisting, bilingual chart coverage, signed comparisons, fictional receive/sale/cost/quantity-credit/refund arithmetic, journal evidence mutations and calculated report deltas. No external API or business database is used by the public tests.
 
-The local Finance selector is a read-only preview: changing it triggers no API request and does not change the source summary. Actual checkout, immutable documents, numeric PDF verification, Golden Transaction, closed-period recovery and Nairobi boundaries continue to pass. Display FX uses labelled example rates, not live market data or an accounting-currency policy.
+The local Finance selector is a read-only preview: changing it triggers no API request and does not change the source summary. Actual checkout, immutable documents, numeric PDF verification, Golden Transaction, closed-period recovery and Nairobi boundaries continue to pass. Dated display FX requires matching provider quote evidence and has no example/current-rate fallback; one end-date quote does not establish historical transaction conversion, settlement rates or an accounting policy. Imported quote files are labelled untrusted presentation inputs.
 
 For implementation boundaries and primary source versions see [QuickBooks demo contracts](QUICKBOOKS_DEMO.md). Original screenshots and hosted tour are unchanged; no actual provider response, company/account ID, token or customer data was added to public assets. The earlier record below is retained as dated evidence.
 

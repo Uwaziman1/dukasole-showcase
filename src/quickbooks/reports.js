@@ -31,14 +31,17 @@ export function projectReport(raw, name, parameters) {
   if (!/^[A-Z]{3}$/.test(header.Currency || ''))
     throw new AppError(502, 'REPORT_CURRENCY', 'The report does not declare a supported currency code.');
   const columns = raw.Columns.Column.map(column => String(column.ColTitle || column.ColType || '').slice(0, 200));
-  const rows = [], totals = {};
+  const rows = [], totals = {}, expenseRows=[];
   const cells = values => (values || []).map(cell => String(cell.value ?? '').slice(0, 400));
-  function visit(list, depth = 0) {
+  function visit(list, depth = 0, group=null) {
     if (depth > 20 || rows.length > 10000) throw new AppError(502, 'REPORT_LIMIT', 'Report too large. Select a smaller date range.');
     for (const row of list || []) {
+      const scope=group==='Expenses'?'Expenses':row.group || group;
       if (row.Header?.ColData) rows.push({ depth, kind: 'heading', cells: cells(row.Header.ColData) });
       if (row.ColData) rows.push({ depth, kind: 'data', cells: cells(row.ColData) });
-      if (row.Rows?.Row) visit(row.Rows.Row, depth + 1);
+      if(row.ColData && !row.Rows?.Row?.length && scope==='Expenses' && columns.length===2 && row.ColData.length===2)
+        expenseRows.push({label:cells(row.ColData)[0],value:minorUnits(row.ColData[1].value)});
+      if (row.Rows?.Row) visit(row.Rows.Row, depth + 1,scope==='Expenses'||group==='Expenses'?'Expenses':scope);
       if (row.Summary?.ColData) {
         const values = cells(row.Summary.ColData);
         rows.push({ depth, kind: 'total', cells: values });
@@ -63,7 +66,9 @@ export function projectReport(raw, name, parameters) {
       Math.abs(balance.liabilities + balance.equity - balance.liabilitiesAndEquity) > 1) balance.status = 'UNBALANCED';
   }
   return { name, currency: header.Currency, from: header.StartPeriod, to: header.EndPeriod,
-    basis: header.ReportBasis, providerGeneratedAt: header.Time || null, columns, rows, totals, balance, moneyUnit: 'minor' };
+    basis: header.ReportBasis, providerGeneratedAt: header.Time || null, columns, rows, totals, balance, moneyUnit: 'minor',
+    expenseBreakdown:{rows:expenseRows,complete:expenseRows.length>0 && expenseRows.every(row=>Number.isSafeInteger(row.value)) &&
+      expenseRows.reduce((sum,row)=>sum+row.value,0)===totals.Expenses} };
 }
 export function discoveryProjection(company, preferences, accounts) {
   const prefs = preferences?.QueryResponse?.Preferences?.[0] || preferences?.Preferences;
